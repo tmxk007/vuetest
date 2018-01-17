@@ -2,7 +2,7 @@
     <div class="ep-tree">
         <el-container>
             <el-aside width="auto">
-                <el-button @click="expandCollapseAll">{{ expandCollapseText() }}</el-button>
+              <el-button @click="expandCollapseAll">{{ expandCollapseText() }}</el-button>
             </el-aside>
             <el-main class="ep-tree-main">
                 <el-input @keydown.native="filterKeydown" :placeholder="placeholder" v-model="filterText">
@@ -10,7 +10,9 @@
             </el-main>
             <el-button class="ep-tree-search-button" type="primary" icon="el-icon-search" @click="searchClick">搜索</el-button>
         </el-container>
-        <el-tree class="filter-tree" node-key="key" check-strictly :show-checkbox="options.showCheckbox" :default-expand-all="defaultExpandAll" :default-checked-keys="defaultCheckedKeys" :data="data" @check-change="checkChange" ref="tree">
+        <el-tree class="filter-tree" node-key="key" check-strictly :show-checkbox="options.showCheckbox" 
+                :default-expand-all="defaultExpandAll" :default-checked-keys="defaultCheckedKeys"
+                :data="data" @check-change="checkChange" ref="tree">
         </el-tree>
     </div>
 </template>
@@ -75,7 +77,7 @@ export default {
         var node = this.treeSearch.searchNode(this.filterText);
         this.$refs.tree.store.setCurrentNode(node);
       } else if (ev.key == "ArrowUp") {
-        var node = this.treeSearch.searchNode(this.filterText,true);
+        var node = this.treeSearch.searchNode(this.filterText, true);
         this.$refs.tree.store.setCurrentNode(node);
       }
     },
