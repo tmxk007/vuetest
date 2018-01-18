@@ -1,16 +1,12 @@
-import Vue from 'vue'
-
-// 修改人：姚小强
-// 修改日期：20180117
-
-// 说明：树节点源码重写
-// 支持动态显示隐藏复选框  v-if="showCheckbox" 修改为 v-if="tree.showCheckbox"
-// 支持双击事件  添加 @dblclick.stop="handleDbClick"
-// 修改NodeContent渲染方法，允许节点文本插入html标签，把源码中innerText修改为innerHTML,用于支持高亮显示标签
-(function (Vue) {
-
-    const template = `
-        <div
+<!-- 
+    创建人：姚小强
+    创建日期：2018.01.19
+    说明：
+        1、支持动态显示隐藏复选框  v-if="showCheckbox" 修改为 v-if="tree.showCheckbox"
+        2、支持双击事件  添加 @dblclick.stop="handleDbClick"
+-->
+<template>
+ <div
             class="el-tree-node"
             @click.stop="handleClick"
             @dblclick.stop="handleDbClick"
@@ -68,49 +64,32 @@ import Vue from 'vue'
                 </el-tree-node>
                 </div>
             </el-collapse-transition>
-        </div>`;
+        </div> 
+</template>
 
-    const ElTreeNode = Vue.Tree.components.ElTreeNode;
-
-    ElTreeNode.render = Vue.compile(template).render;
-
-    ElTreeNode.methods.handleDbClick = function () {
-        this.node.expanded = true;
-        this.node.checked = !this.node.checked;
-        setCheckedChildNodes(this.node, this.node.checked);
+<script>
+export default {
+  mixins: [$ElTree.components.ElTreeNode],
+  data() {
+    return {};
+  },
+  methods: {
+    handleDbClick() {
+      this.node.expanded = true;
+      this.node.checked = !this.node.checked;
+      setCheckedChildNodes(this.node, this.node.checked);
     }
-
-    ElTreeNode.components.NodeContent.render = function(h){
-        const parent = this.$parent;
-        const node = this.node;
-        const data = node.data;
-        const store = node.store;
-        if(parent.renderContent){
-            return parent.renderContent.call(parent._renderProxy, h, { _self: parent.tree.$vnode.context, node, data, store });
-        }
-        else{
-            return h('span',{
-                attr: {
-                    class: 'el-tree-node__label'
-                },
-                domProps: {
-                    // 把源码中innerText重写为innerHTML,用于支持高亮显示标签
-                    innerHTML: this.node.label
-                }
-            })
-        }
-    }
-
-    // 设置子节点选中状态
-    function setCheckedChildNodes(currentNode, checked) {
-        if (!currentNode || !currentNode.childNodes) return;
-        var childNodes = currentNode.childNodes;
-        for (var i = 0; i < childNodes.length; i++) {
-            var node = childNodes[i];
-            node.expanded = true;
-            node.checked = checked;
-            setCheckedChildNodes(node, checked);
-        }
-    }
-
-})(Vue);
+  }
+};
+// 设置子节点选中状态
+function setCheckedChildNodes(currentNode, checked) {
+  if (!currentNode || !currentNode.childNodes) return;
+  var childNodes = currentNode.childNodes;
+  for (var i = 0; i < childNodes.length; i++) {
+    var node = childNodes[i];
+    node.expanded = true;
+    node.checked = checked;
+    setCheckedChildNodes(node, checked);
+  }
+}
+</script>

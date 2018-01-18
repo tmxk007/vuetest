@@ -141,7 +141,8 @@ Vue.prototype.$prompt = MessageBox.prompt
 Vue.prototype.$notify = Notification
 Vue.prototype.$message = Message
 
-Vue.Tree = Tree
+window.$ElTree = Tree
+window.$ElTable = Table
 
-require('./table/index');
-require('./tree/index');
+require('./ep/table/index');
+require('./ep/tree/index');
