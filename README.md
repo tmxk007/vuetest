@@ -1,5 +1,5 @@
-views文件夹：业务组件
+views：页面组件
 
-components文件夹：公共组件
+components：公共组件
 
-test文件夹：公共组件测试demo
+test：公共组件测试demo
